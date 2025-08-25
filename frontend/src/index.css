@@ -23,3 +23,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.homepage-main-decor {
+  animation: homepage-main-decor 4s ease  infinite;
+  transition: 4s ease;
+}
+
+@keyframes homepage-main-decor {
+  0% {
+
+    background: linear-gradient(to right, #01f7ff, #ae00ff);
+  }
+  100% {
+    background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+  }
+}
+

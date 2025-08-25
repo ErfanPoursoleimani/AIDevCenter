@@ -26,7 +26,7 @@ const TopNavbar: React.FC = () => {
   ]
 
   return (
-    <nav className="backdrop-blur-3xl min-h-19 flex justify-center items-stretch px-3 shadow-lg sticky top-0 z-50">
+    <nav className="backdrop-blur-3xl min-h-19 flex justify-center items-stretch px-3 shadow-lg fixed w-full top-0">
       <div className='flex justify-between items-stretch w-full max-w-[1300px]'>
         <h1 className='flex items-center text-2xl font-bold'>Erfan Ps</h1>
         <ul className='flex items-center gap-4 max-md:hidden'>
