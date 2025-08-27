@@ -1,4 +1,5 @@
 import { FaArrowDown } from "react-icons/fa"
+import AnimatedBox from "../AnimatedBox"
 
 const Main = () => {
   return (
@@ -7,7 +8,7 @@ const Main = () => {
           className="absolute -z-10 rounded-[100px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-3/5 w-2/3"
           style={{
               background: 'linear-gradient(-90deg, #01f7ff, #d16eff, #ff6b6b, #4ecdc4)',
-              backgroundSize: '200% 200%',
+              backgroundSize: '300% 300%',
               animation: 'gradientShift 8s ease infinite'
             }}
         />
@@ -21,13 +22,17 @@ const Main = () => {
 
         <div className="absolute inset-0 -z-9 w-full h-full flex justify-center bg-transparent backdrop-blur-[140px] overflow-y-auto">
             
-            <h1 className="absolute top-[40vh] -translate-y-full text-center w-full text-[5rem] max-md:text-[3rem] font-bold px-7">
-              <span>AI Dev Center</span>
+            <div className="absolute top-[40vh] -translate-y-full text-center w-full text-[5rem] max-md:text-[3rem] space-y-5 font-bold px-7">
+              <h1 className="flex justify-center gap-4">
+                <AnimatedBox animation="slideLeft" config={{delay: 0.1}} className="">AI</AnimatedBox>
+                <AnimatedBox animation="slideLeft" config={{delay: 0.3}} className="">Dev</AnimatedBox>
+                <AnimatedBox animation="slideLeft" config={{delay: 0.5}} className="">Center</AnimatedBox>
+              </h1>
               <div className="text-[0.9rem] font-medium flex gap-2 items-center justify-center w-full">
                 <span>Scroll Down</span>
                 <FaArrowDown className="animate-bounce"/>
               </div>
-            </h1>
+            </div>
         </div>
     </div>
   )
