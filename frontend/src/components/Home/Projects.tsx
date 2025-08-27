@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "../../hooks/useInView";
 import AnimatedBox from "../AnimatedBox";
 import useScrollModifier from "../../hooks/useScrollModifier";
+import { useScrollProgress } from "../../hooks/useScrollProgress";
 
 const CardData = [
     {id: 1, lable: "Natural language processing (NLP)", desctirption: "AI technology that enables computers to understand, interpret, and generate human language. Used in chatbots, translation services, and text analysis applications."},
@@ -13,9 +14,9 @@ const CardData = [
 
 const Projects = () => {
     const { ref: refCards, inView: cardsInView } = useInView({ threshold: 0.1, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection1, inView: section1InView } = useInView({ threshold: 0.1, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection2, inView: section2InView } = useInView({ threshold: 0.2, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection3, inView: section3InView } = useInView({ threshold: 0.2, triggerOnce: false, rootMargin: "0px" });
+    const { ref: refSection1, inView: section1InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
+    const { ref: refSection2, inView: section2InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
+    const { ref: refSection3, inView: section3InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
     const [screenWidth, setScreenWidth] = useState<number>(
         typeof window !== 'undefined' ? window.innerWidth : 0
     );
@@ -23,6 +24,27 @@ const Projects = () => {
     useScrollModifier(refSection1, section1InView)
     useScrollModifier(refSection2, section2InView)
     useScrollModifier(refSection3, section3InView)
+
+    const [isAtTop, setIsAtTop] = useState(false);
+    const scrollableRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (scrollableRef.current) {
+                const rect = scrollableRef.current.getBoundingClientRect();
+                // Check if the scrollable div has reached the top of the viewport (window)
+                setIsAtTop(rect.top <= 20 && rect.top >= -20);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Check initial position
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+
+
     useEffect(() => {
         const handleResize = () => {
         setScreenWidth(window.innerWidth);
@@ -57,15 +79,27 @@ const Projects = () => {
         return () => cancelAnimationFrame(raf)
     }, []);
 
-    const setRefs = (element: any) => {
+    const setRefsCardContainer = (element: any) => {
         refCards.current = element;
         cardsContainerRef.current = element;
+    };
+    
+    const { scale, containerRef: progressScrollContainer } = useScrollProgress({
+        container: "element",
+        minScale: screenWidth <= 767 ? 0.01 : 0.01 ,
+        maxScale: 7,
+    });
+    
+    const setRefsSection2 = (element: any) => {
+        refSection2.current = element;
+        progressScrollContainer.current = element;
+        scrollableRef.current = element
     };
 
   return (
     <div ref={parentContainer} className="relative top-[100vh] w-full flex flex-col items-center">
         <div 
-            ref={setRefs}
+            ref={setRefsCardContainer}
             className="sticky md:top-[55vh] w-full max-md:min-h-[100vh] overflow-auto scrollbar-hide max-md:flex-col flex gap-5 p-3 py-10 md:p-10"
         >
             <div className="flex max-md:flex-col gap-5">
@@ -99,31 +133,36 @@ const Projects = () => {
                 ))}
             </div>
         </div>
-        <div ref={refSection1} className="sticky top-0 mt-50 max-md:mt-50 bg-[#fff] text-black w-full min-h-[100vh] flex flex-col items-center justify-center">
-           
-        </div>
-        <div ref={refSection2} className="sticky top-0 w-full min-h-[100vh] flex flex-col items-center bg-[#ff96a8]">
+        <section 
+        ref={setRefsSection2} 
+        className={`
+            sticky top-0 w-full h-[100vh] scrollbar-hide scroll-smooth
+            ${isAtTop ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden pointer-events-none'}
+        `}>
+            <div className="sticky top-0 min-h-[200vh] w-full">
+                <div className="sticky top-0 w-full h-[100vh] bg-[url(blackboard-inscribed-with-scientific-formulas-calculations.jpg)] bg-cover flex flex-col items-center justify-center">
+                    <div className="absolute inset-0 w-full min-h-[100vh] -z-1 bg-[#000000ce]"></div>
+                    <div
+                        className={`
+                            relative w-[100vw] h-[100vh] rounded-[7px] bg-[black]
 
-        </div>
-        <div ref={refSection3} className="sticky w-full min-h-[100vh] flex flex-col items-center bg-[#87e7ff]">
-            <div className="overflow-x-clip md:flex md:flex-wrap max-md:flex-col md:items-center justify-center gap-3 md:gap-10 p-3 md:p-10">
-                <AnimatedBox config={{delay: 0.2}} animation="slideRight" threshold={0.5} className="bg-gradient-to-t from-blue-100 max-md:w-full md:min-w-80 md:max-w-80 xl:max-w-100 backdrop-blur-[10px] inline-flex shadow-2xl flex-col gap-10 p-10 rounded-4xl">
-                    <h3 className="text-2xl font-medium">Lorem Ipsum</h3>
-                    <p className="text-[0.8rem] max-w-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fugiat perspiciatis ex, modi molestias neque minus vero. Provident, dolorem atque.</p>
-                    <button className=" p-2 bg-[#333] text-white rounded-xl">Try it</button>
-                </AnimatedBox>
-                <AnimatedBox config={{delay: 0.2}} animation="slideUp" threshold={0.5} className="bg-gradient-to-t from-blue-100 max-md:w-full md:min-w-80 md:max-w-80 xl:max-w-100 backdrop-blur-[10px] inline-flex shadow-2xl flex-col gap-10 p-10 rounded-4xl">
-                    <h3 className="text-2xl font-medium">Lorem Ipsum</h3>
-                    <p className="text-[0.8rem] max-w-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fugiat perspiciatis ex, modi molestias neque minus vero. Provident, dolorem atque.</p>
-                    <button className=" p-2 bg-[#333] text-white rounded-xl">Try it</button>
-                </AnimatedBox>
-                <AnimatedBox config={{delay: 0.2}} animation="slideLeft" threshold={0.5} className="bg-gradient-to-t from-blue-100 max-md:w-full md:min-w-80 md:max-w-80 xl:max-w-100 backdrop-blur-[10px] inline-flex shadow-2xl flex-col gap-10 p-10 rounded-4xl">
-                    <h3 className="text-2xl font-medium">Lorem Ipsum</h3>
-                    <p className="text-[0.8rem] max-w-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus fugiat perspiciatis ex, modi molestias neque minus vero. Provident, dolorem atque.</p>
-                    <button className=" p-2 bg-[#333] text-white rounded-xl">Try it</button>
-                </AnimatedBox>
+                        `}
+                        style={{
+                            WebkitMaskImage: `radial-gradient(circle at center, transparent ${400*scale}px, black ${400*scale}px)`,
+                            maskImage: `radial-gradient(circle at center, transparent ${400*scale}px, black ${400*scale}px)`,
+                            WebkitMaskRepeat: 'no-repeat',
+                            maskRepeat: 'no-repeat',
+                        }}
+                    >
+                    </div>
+                    {/* <img className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] min-w-[100vw] min-h-[100vh] object-cover" src="https://i.postimg.cc/1sXvNbzV/ricefield1.jpg" alt="" /> */}
+                </div>
             </div>
-        </div>
+            <div ref={refSection1} className="sticky top-0 bg-[#ffffff] text-black w-full min-h-[100vh] flex flex-col items-center justify-center">
+           
+            </div>
+        </section>
+
     </div>
   )
 }
