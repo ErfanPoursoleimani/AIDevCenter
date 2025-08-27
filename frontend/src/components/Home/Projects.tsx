@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "../../hooks/useInView";
-import AnimatedBox from "../AnimatedBox";
 import useScrollModifier from "../../hooks/useScrollModifier";
 import { useScrollProgress } from "../../hooks/useScrollProgress";
 
