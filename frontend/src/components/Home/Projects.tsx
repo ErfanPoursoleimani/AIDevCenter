@@ -85,8 +85,8 @@ const Projects = () => {
     
     const { scale, containerRef: progressScrollContainer } = useScrollProgress({
         container: "element",
-        minScale: screenWidth <= 767 ? 0.01 : 0.01 ,
-        maxScale: 7,
+        minScale: 0 ,
+        maxScale: screenWidth <= 767 ? 2 : 5,
     });
     
     const setRefsSection2 = (element: any) => {
@@ -99,11 +99,11 @@ const Projects = () => {
     <div ref={parentContainer} className="relative top-[100vh] w-full flex flex-col items-center">
         <div 
             ref={setRefsCardContainer}
-            className="sticky md:top-[55vh] w-full max-md:min-h-[100vh] overflow-auto scrollbar-hide max-md:flex-col flex gap-5 p-3 py-10 md:p-10"
+            className="bg-gradient-to-t from-black from-10% pb-70 max-md:pb-30 px-5 sticky md:top-[55vh] w-full max-md:min-h-[100vh] overflow-auto scrollbar-hide max-md:flex-col flex gap-5"
         >
             <div className="flex max-md:flex-col gap-5">
                 {CardData.map((card) => (
-                    <div key={card.id} className="md:min-w-100 min-h-80 min-w-full shadow-xl bg-gradient-to-t from-black text-white backdrop-blur-[10px] inline-flex flex-col justify-between gap-10 p-10 rounded-4xl">
+                    <div key={card.id} className="md:min-w-80 xl:min-w-100 min-h-80 min-w-full shadow-xl bg-gradient-to-t from-black text-white backdrop-blur-[10px] inline-flex flex-col justify-between gap-10 p-10 rounded-4xl">
                         <h3 className="text-2xl font-medium">{card.lable}</h3>
                         <div className="space-y-10">
                             <p className="text-[0.8rem] max-w-80">{card.desctirption}</p>
@@ -118,7 +118,7 @@ const Projects = () => {
             </div>
             <div className="flex gap-5 max-md:hidden">
                 {CardData.map((card) => (
-                    <div key={card.id} className="md:min-w-100 min-h-80 min-w-full shadow-xl bg-gradient-to-t from-black text-white backdrop-blur-[10px] inline-flex flex-col justify-between gap-10 p-10 rounded-4xl">
+                    <div key={card.id} className="md:min-w-80 xl:min-w-100 min-h-80 min-w-full shadow-xl bg-gradient-to-t from-black text-white backdrop-blur-[10px] inline-flex flex-col justify-between gap-10 p-10 rounded-4xl">
                         <h3 className="text-2xl font-medium">{card.lable}</h3>
                         <div className="space-y-10">
                             <p className="text-[0.8rem] max-w-80">{card.desctirption}</p>
@@ -139,11 +139,21 @@ const Projects = () => {
             ${isAtTop ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden pointer-events-none'}
         `}>
             <div className="sticky top-0 min-h-[200vh] w-full">
-                <div className="sticky top-0 w-full h-[100vh] bg-[url(blackboard-inscribed-with-scientific-formulas-calculations.jpg)] bg-cover flex flex-col items-center justify-center">
-                    <div className="absolute inset-0 w-full min-h-[100vh] -z-1 bg-[#000000ce]"></div>
+                <div className="sticky top-0 w-full h-[100vh] flex flex-col items-center justify-center">
+                    <img 
+                    src="3d-render-modern-background-with-flowing-cyber-particles.jpg"
+                    className={`absolute inset-0 w-full h-[100vh] object-cover scale-`}
+                    style={{
+/*                             WebkitMaskImage: `radial-gradient(circle at center, transparent 50px, black 400px)`,
+                            maskImage: `radial-gradient(circle at center, transparent 50px, black 400px)`,
+                            WebkitMaskRepeat: 'no-repeat',
+                            maskRepeat: 'no-repeat', */
+                            scale: 1 + scale * 0.2
+                        }}
+                    ></img>
                     <div
                         className={`
-                            relative w-[100vw] h-[100vh] rounded-[7px] bg-[black]
+                            relative w-[100vw] h-[100vh] rounded-[7px] backdrop-blur-2xl bg-[#00000071]
 
                         `}
                         style={{
