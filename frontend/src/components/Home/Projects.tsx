@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "../../hooks/useInView";
-import useScrollModifier from "../../hooks/useScrollModifier";
+// import { useInView } from "../../hooks/useInView";
+// import useScrollModifier from "../../hooks/useScrollModifier";
 import { useScrollProgress } from "../../hooks/useScrollProgress";
 
 const CardData = [
@@ -12,35 +12,17 @@ const CardData = [
 ]
 
 const Projects = () => {
-    const { ref: refCards, inView: cardsInView } = useInView({ threshold: 0.1, triggerOnce: false, rootMargin: "0px" });
+/*     const { ref: refCards, inView: cardsInView } = useInView({ threshold: 0.1, triggerOnce: false, rootMargin: "0px" });
     const { ref: refSection1, inView: section1InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
     const { ref: refSection2, inView: section2InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection3, inView: section3InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
+    const { ref: refSection3, inView: section3InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" }); */
     const [screenWidth, setScreenWidth] = useState<number>(
         typeof window !== 'undefined' ? window.innerWidth : 0
     );
-    useScrollModifier(refCards, cardsInView, { landingPosition: screenWidth < 767 ? 'start' : "end" })
-    useScrollModifier(refSection1, section1InView)
-    useScrollModifier(refSection2, section2InView)
-    useScrollModifier(refSection3, section3InView)
-
-    const [isAtTop, setIsAtTop] = useState(false);
-    const scrollableRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (scrollableRef.current) {
-                const rect = scrollableRef.current.getBoundingClientRect();
-                // Check if the scrollable div has reached the top of the viewport (window)
-                setIsAtTop(rect.top <= 20 && rect.top >= -20);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Check initial position
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    // useScrollModifier(refCards, cardsInView, { landingPosition: screenWidth < 767 ? 'start' : "end" })
+    // useScrollModifier(refSection1, section1InView)
+    // useScrollModifier(refSection2, section2InView)
+    // useScrollModifier(refSection3, section3InView)
 
 
 
@@ -79,21 +61,16 @@ const Projects = () => {
     }, []);
 
     const setRefsCardContainer = (element: any) => {
-        refCards.current = element;
+        // refCards.current = element;
         cardsContainerRef.current = element;
     };
     
-    const { scale, containerRef: progressScrollContainer } = useScrollProgress({
-        container: "element",
+    const { scale, progress } = useScrollProgress({
+        container: "window",
         minScale: 0 ,
-        maxScale: screenWidth <= 767 ? 2 : 5,
+        maxScale: 6,
     });
     
-    const setRefsSection2 = (element: any) => {
-        refSection2.current = element;
-        progressScrollContainer.current = element;
-        scrollableRef.current = element
-    };
 
   return (
     <div ref={parentContainer} className="relative top-[100vh] w-full flex flex-col items-center">
@@ -132,46 +109,43 @@ const Projects = () => {
                 ))}
             </div>
         </div>
-        <section 
-        ref={setRefsSection2} 
-        className={`
-            sticky top-0 w-full h-[100vh] scrollbar-hide scroll-smooth
-            ${isAtTop ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden pointer-events-none'}
-        `}>
-            <div className="sticky top-0 min-h-[200vh] w-full">
-                <div className="sticky top-0 w-full h-[100vh] flex flex-col items-center justify-center">
-                    <img 
-                    src="3d-render-modern-background-with-flowing-cyber-particles.jpg"
-                    className={`absolute inset-0 w-full h-[100vh] object-cover scale-`}
+        <div className="sticky top-0 min-h-[300vh] max-md:min-h-[150vh] w-full">
+            <div className="sticky top-0 w-full max-h-[100vh] flex flex-col items-center justify-center overflow-hidden">
+                <div 
+                // src="3d-render-modern-background-with-flowing-cyber-particles.jpg"
+                className={`absolute inset-0 w-full h-[100vh] object-cover bg-[#ffffff]`}
+                style={{scale: 1 + scale * 0.1}}
+                ></div>
+                <div
+                    className={`
+                        pl-40 pt-30 relative w-[100vw] h-[100vh] rounded-[7px] backdrop-blur-2xl bg-gradient-to-br from-[#ffffff] from-55% to-cyan-900 to-55%
+                    `}
                     style={{
-/*                             WebkitMaskImage: `radial-gradient(circle at center, transparent 50px, black 400px)`,
-                            maskImage: `radial-gradient(circle at center, transparent 50px, black 400px)`,
-                            WebkitMaskRepeat: 'no-repeat',
-                            maskRepeat: 'no-repeat', */
-                            scale: 1 + scale * 0.2
-                        }}
-                    ></img>
-                    <div
-                        className={`
-                            relative w-[100vw] h-[100vh] rounded-[7px] backdrop-blur-2xl bg-[#00000071]
-
-                        `}
-                        style={{
-                            WebkitMaskImage: `radial-gradient(circle at center, transparent ${400*scale}px, black ${400*scale}px)`,
-                            maskImage: `radial-gradient(circle at center, transparent ${400*scale}px, black ${400*scale}px)`,
-                            WebkitMaskRepeat: 'no-repeat',
-                            maskRepeat: 'no-repeat',
-                        }}
-                    >
-                    </div>
-                    {/* <img className="absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] min-w-[100vw] min-h-[100vh] object-cover" src="https://i.postimg.cc/1sXvNbzV/ricefield1.jpg" alt="" /> */}
+                        WebkitMaskImage: `radial-gradient(circle at center, transparent ${550*scale - 1270}px, black ${550*scale - 1270}px)`,
+                        maskImage: `radial-gradient(circle at center, transparent ${550*scale - 1270}px, black ${550*scale - 1270}px)`,
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskRepeat: 'no-repeat',
+                    }}
+                >
+                    <span className="text-[10rem] font-bold text-cyan-900 text-shadow-2xs max-md:text-[1rem] pr-15">Agentic AI</span>
                 </div>
             </div>
-            <div ref={refSection1} className="sticky top-0 bg-[#ffffff] text-black w-full min-h-[100vh] flex flex-col items-center justify-center">
-           
+        </div>
+        <div className="fixed z-1 px-5 top-0 left-0 md:w-20 md:h-[100vh] w-[100vw] h-20 flex justify-stretch items-center md:flex-col md:justify-center md:items-stretch bg-[#fff] shadow-2xl">
+            <span className="font-bold text-black text-[1.2rem] md:hidden">ErfanPs</span>
+            <div className="flex-1 w-full flex items-center justify-center">
+                <span 
+                className={`md:w-[2px] h-[2px] bg-[black]`}
+                style={ screenWidth <= 767 ? { width: `${progress*25}%` } : { height: `${progress*25}%` }}
+                ></span>
             </div>
-        </section>
-
+            <div className='flex items-center gap-4 md:hidden'>
+                <button className="text-[0.8rem] border-1 px-3 py-[6px] border-neutral-200 rounded-[7px]">Sign In</button>
+                <button className="text-[0.8rem] border-1 px-3 py-[6px] bg-black text-white rounded-[7px]">Sign Up</button>
+            </div>
+        </div>
+        <div className="sticky top-0 w-full min-h-[100vh] bg-cyan-800 px-10">
+        </div>
     </div>
   )
 }
