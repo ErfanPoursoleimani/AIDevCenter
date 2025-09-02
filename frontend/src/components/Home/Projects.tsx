@@ -12,10 +12,10 @@ const CardData = [
 ]
 
 const Projects = () => {
-/*     const { ref: refCards, inView: cardsInView } = useInView({ threshold: 0.1, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection1, inView: section1InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection2, inView: section2InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
-    const { ref: refSection3, inView: section3InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" }); */
+    // const { ref: refCards, inView: cardsInView } = useInView({ threshold: 0.1, triggerOnce: false, rootMargin: "0px" });
+    // const { ref: refSection1, inView: section1InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
+    // const { ref: refSection2, inView: section2InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
+    // const { ref: refSection3, inView: section3InView } = useInView({ threshold: 0.3, triggerOnce: false, rootMargin: "0px" });
     const [screenWidth, setScreenWidth] = useState<number>(
         typeof window !== 'undefined' ? window.innerWidth : 0
     );
@@ -76,7 +76,10 @@ const Projects = () => {
     <div ref={parentContainer} className="relative top-[100vh] w-full flex flex-col items-center">
         <div 
             ref={setRefsCardContainer}
-            className="bg-gradient-to-t from-black from-10% pb-70 max-md:pb-30 px-5 sticky md:top-[55vh] w-full max-md:min-h-[100vh] overflow-auto scrollbar-hide max-md:flex-col flex gap-5"
+            className={`bg-gradient-to-t from-black from-10% pb-70 max-md:pb-30 px-5 sticky ${progress <= 0.5 ? "md:top-[55vh]" : "" } w-full max-md:min-h-[100vh] overflow-auto scrollbar-hide max-md:flex-col flex gap-5`}
+/*             style={{
+                visibility: progress >= 0.5 && progress < 1 ? "hidden" : "visible"
+            }} */
         >
             <div className="flex max-md:flex-col gap-5">
                 {CardData.map((card) => (
@@ -109,16 +112,15 @@ const Projects = () => {
                 ))}
             </div>
         </div>
-        <div className="sticky top-0 min-h-[300vh] max-md:min-h-[150vh] w-full">
+        <div className="sticky  min-h-[300vh] max-md:min-h-[150vh] w-full">
             <div className="sticky top-0 w-full max-h-[100vh] flex flex-col items-center justify-center overflow-hidden">
-                <div 
-                // src="3d-render-modern-background-with-flowing-cyber-particles.jpg"
-                className={`absolute inset-0 w-full h-[100vh] object-cover bg-[#ffffff]`}
-                style={{scale: 1 + scale * 0.1}}
+                <div
+                className={`absolute inset-0 w-full h-[100vh] object-center bg-[white]`}
+                style={{scale: 1 + scale * 0.05}}
                 ></div>
                 <div
                     className={`
-                        pl-40 pt-30 relative w-[100vw] h-[100vh] rounded-[7px] backdrop-blur-2xl bg-gradient-to-br from-[#ffffff] from-55% to-cyan-900 to-55%
+                        md:ml-12 relative w-[100vw] h-[100vh] rounded-[7px] backdrop-blur-2xl bg-radial bg-cyan-700
                     `}
                     style={{
                         WebkitMaskImage: `radial-gradient(circle at center, transparent ${550*scale - 1270}px, black ${550*scale - 1270}px)`,
@@ -127,11 +129,14 @@ const Projects = () => {
                         maskRepeat: 'no-repeat',
                     }}
                 >
-                    <span className="text-[10rem] font-bold text-cyan-900 text-shadow-2xs max-md:text-[1rem] pr-15">Agentic AI</span>
                 </div>
             </div>
         </div>
-        <div className="fixed z-1 px-5 top-0 left-0 md:w-20 md:h-[100vh] w-[100vw] h-20 flex justify-stretch items-center md:flex-col md:justify-center md:items-stretch bg-[#fff] shadow-2xl">
+        <div className="sticky w-full min-h-[100vh] bg-neutral-600 px-10">
+        </div>
+        <div className="sticky w-full min-h-[100vh] px-10">
+        </div>
+        <div className="fixed z-1 px-5 top-0 left-0 md:w-12 md:h-[100vh] w-[100vw] min-h-17 flex justify-stretch items-center md:flex-col md:justify-center md:items-stretch bg-[#fff] shadow-2xl">
             <span className="font-bold text-black text-[1.2rem] md:hidden">ErfanPs</span>
             <div className="flex-1 w-full flex items-center justify-center">
                 <span 
@@ -143,8 +148,6 @@ const Projects = () => {
                 <button className="text-[0.8rem] border-1 px-3 py-[6px] border-neutral-200 rounded-[7px]">Sign In</button>
                 <button className="text-[0.8rem] border-1 px-3 py-[6px] bg-black text-white rounded-[7px]">Sign Up</button>
             </div>
-        </div>
-        <div className="sticky top-0 w-full min-h-[100vh] bg-cyan-800 px-10">
         </div>
     </div>
   )

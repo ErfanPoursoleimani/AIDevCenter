@@ -5,14 +5,18 @@ import App from './App.tsx'
 import 'lenis/dist/lenis.css'
 import Lenis from 'lenis'
 
-const lenis = new Lenis();
-
-function raf(time: any) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-
-requestAnimationFrame(raf);
+const lenis = new Lenis({
+    autoRaf: true,
+    lerp: 0.1,
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 2,
+    touchMultiplier: 2,
+    infinite: true,
+  });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

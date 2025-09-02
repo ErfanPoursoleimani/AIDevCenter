@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+/* import { useSearchParams } from 'react-router-dom';
 import { useCallback } from 'react';
 
 export const useQueryParams = () => {
@@ -34,4 +34,4 @@ export const useQueryParams = () => {
     removeParam,
     getAllParams
   };
-};
+}; */

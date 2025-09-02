@@ -22,10 +22,12 @@ const Main = () => {
 
         <div className="absolute inset-0 -z-9 w-full h-full flex justify-center bg-transparent backdrop-blur-[140px] overflow-y-auto">
             
-            <div className="absolute top-[40vh] -translate-y-full text-center w-full text-[5rem] max-md:text-[3rem] space-y-5 font-bold px-7">
-              <h1 className="flex justify-center gap-4">
-                <AnimatedBox animation="slideLeft" config={{delay: 0.1}} className="">AI</AnimatedBox>
-                <AnimatedBox animation="slideLeft" config={{delay: 0.3}} className="">Dev</AnimatedBox>
+            <div className="absolute top-[50vh] max-[370px]: -translate-y-full text-center w-full text-[5rem] max-md:text-[3rem] space-y-5 font-bold px-7">
+              <h1 className="flex max-[370px]:flex-col justify-center gap-4">
+                <span className="flex justify-center gap-4">
+                  <AnimatedBox animation="slideLeft" config={{delay: 0.1}} className="">AI</AnimatedBox>
+                  <AnimatedBox animation="slideLeft" config={{delay: 0.3}} className="">Dev</AnimatedBox>
+                </span>
                 <AnimatedBox animation="slideLeft" config={{delay: 0.5}} className="">Center</AnimatedBox>
               </h1>
               <div className="text-[0.9rem] font-medium flex gap-2 items-center justify-center w-full">
