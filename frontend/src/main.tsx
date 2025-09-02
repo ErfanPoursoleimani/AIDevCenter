@@ -5,7 +5,7 @@ import App from './App.tsx'
 import 'lenis/dist/lenis.css'
 import Lenis from 'lenis'
 
-const lenis = new Lenis({
+new Lenis({
     autoRaf: true,
     lerp: 0.1,
     duration: 1.2,
